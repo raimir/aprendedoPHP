@@ -7,13 +7,22 @@
 	</style>
 	
 	<script tyype="text/javascript">
+		document.addEventListener( "DOMContentLoaded", click, true );
 		function ok() {
 			alert("ok");
 			return document.getElementById().text;
 		}
 
 		function requestCep() {
-			var url = "//viacep.com.br/ws/" + 41750290 + "/json/";
+			var cep = document.getElementById("cep").value;
+			var url = "//viacep.com.br/ws/" 
+			
+			if ( cep != null && cep != "" ) {
+				url += cep + "/json/";
+			}
+			else {
+				url += "41750290/json/";
+			}
 			var xhr = new XMLHttpRequest();
 			
 			xhr.open("GET", url, true);
@@ -26,29 +35,17 @@
 				}
 
 				if(xhr.status == 200 ){
-					console.log(xhr.responseText); 
+					var js = JSON.parse(xhr.responseText);
+					document.getElementById('log').value=(js.logradouro);
+					document.getElementById('bairro').value=(js.bairro);
+					//document.getElementById('cidade').value=(js.localidade);
+					//document.getElementById('uf').value=(js.uf);
+					//document.getElementById('ibge').value=(js.ibge);
 				}
 			}
 			xhr.setRequestHeader("Content-Type", "text/json");
 			xhr.send();	
 		}
-
-		function meu_callback(conteudo) {
-        return conteudo;
-        if (!("erro" in conteudo)) {
-            //Atualiza os campos com os valores.
-            document.getElementById('rua').value=(conteudo.logradouro);
-            document.getElementById('bairro').value=(conteudo.bairro);
-            document.getElementById('cidade').value=(conteudo.localidade);
-            document.getElementById('uf').value=(conteudo.uf);
-            document.getElementById('ibge').value=(conteudo.ibge);
-        } //end if.
-        else {
-            //CEP não Encontrado.
-            limpa_formulário_cep();
-            alert("CEP não encontrado.");
-        }
-    }
 
 		/*
 		URL: viacep.com.br/ws/01001000/json/ 
@@ -98,11 +95,22 @@
 							<tr>
 								<td><label for="cep">CEP</label></td>
 								<td><input id="cep" type="text" name="cep"></td>
+								<td><button id="bcep">Buscar CEP</button></td>
 							</tr>
 
 							<tr>
+								<td><label for="log">Logradouro</label></td>
+								<td><input id="log" type="text" name="log"></td>
+							</tr>
+							
+							<tr>
 								<td><label for="num">Numero</label></td>
 								<td><input id="num" type="text" name="num"></td>
+							</tr>
+							
+							<tr>
+								<td><label for="bairro">Bairro</label></td>
+								<td><input id="bairro" type="text" name="bairro"></td>
 							</tr>
 
 							<tr>
@@ -110,10 +118,6 @@
 								<td><input id="comp" type="text" name="comp"></td>
 							</tr>
 
-							<tr>
-								<td><label for="abc">Abc</label></td>
-								<td><input id="abc" type="text" name="abc"></td>
-							</tr>
 							<tr>
 								<td></td>
 								<td><input type="submit" name="enviar" value="Enviar" onclick="requestCep()"></td>
