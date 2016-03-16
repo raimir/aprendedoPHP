@@ -8,16 +8,22 @@
 	
 	<script type="text/javascript">
 		var bcep = document.getElementById("bcep");
+		
 		if ( bcep ) {
-			bcep.addEventListener("click", requestCep(), true); 
+			bcep.addEventListener("click", requestCep); 
+			bcep.addEventListener("click", function(){
+				document.getElementById("cep").innerHTML = "asdfsdf";
+			}); 
 		}
+	
+		
 		
 		function ok() {
 			alert("ok");
 			return document.getElementById().text;
 		}
 
-		function requestCep() {
+		function requestCep(event) {
 			var cep = document.getElementById("cep").value;
 			var url = "//viacep.com.br/ws/" 
 			
@@ -32,7 +38,6 @@
 			xhr.open("GET", url, true);
 
 			xhr.onreadystatechange = function() {
-				console.log("chegou");
 				console.log(xhr.readystate);
 				if(xhr.readystate == XMLHttpRequest.DONE) {
 					return;
@@ -50,7 +55,9 @@
 			xhr.setRequestHeader("Content-Type", "text/json");
 			xhr.send();	
 		}
-
+		
+		
+		
 		/*
 		URL: viacep.com.br/ws/01001000/json/ 
 		UNICODE: viacep.com.br/ws/01001000/json/unicode/
@@ -99,7 +106,7 @@
 							<tr>
 								<td><label for="cep">CEP</label></td>
 								<td><input id="cep" type="text" name="cep"></td>
-								<td><button id="bcep" type="button">Buscar CEP</button></td>
+								<td><button id="bcep" type="button" onclick="requestCep(this)">Buscar CEP</button></td>
 							</tr>
 
 							<tr>
