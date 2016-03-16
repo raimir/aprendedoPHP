@@ -6,8 +6,12 @@
 		<?php include("/css/layout-home.css") ?>
 	</style>
 	
-	<script tyype="text/javascript">
-		document.addEventListener( "DOMContentLoaded", click, true );
+	<script type="text/javascript">
+		var bcep = document.getElementById("bcep");
+		if ( bcep ) {
+			bcep.addEventListener("click", requestCep(), true); 
+		}
+		
 		function ok() {
 			alert("ok");
 			return document.getElementById().text;
@@ -95,7 +99,7 @@
 							<tr>
 								<td><label for="cep">CEP</label></td>
 								<td><input id="cep" type="text" name="cep"></td>
-								<td><button id="bcep">Buscar CEP</button></td>
+								<td><button id="bcep" type="button">Buscar CEP</button></td>
 							</tr>
 
 							<tr>
