@@ -10,10 +10,10 @@
 		var bcep = document.getElementById("bcep");
 		
 		if ( bcep ) {
-			bcep.addEventListener("click", requestCep); 
-			bcep.addEventListener("click", function(){
-				document.getElementById("cep").innerHTML = "asdfsdf";
-			}); 
+			//bcep.addEventListener("click", requestCep); 
+			//bcep.addEventListener("click", function(){
+			//	document.getElementById("cep").innerHTML = "asdfsdf";
+			//}); 
 		}
 	
 		
@@ -31,19 +31,20 @@
 				url += cep + "/json/";
 			}
 			else {
-				url += "41750290/json/";
+				url += 41750290 + "/json/";
 			}
 			var xhr = new XMLHttpRequest();
 			
 			xhr.open("GET", url, true);
 
 			xhr.onreadystatechange = function() {
-				console.log(xhr.readystate);
 				if(xhr.readystate == XMLHttpRequest.DONE) {
 					return;
 				}
 
 				if(xhr.status == 200 ){
+					var resp = xhr.responseText;
+					console.log(resp)
 					var js = JSON.parse(xhr.responseText);
 					document.getElementById('log').value=(js.logradouro);
 					document.getElementById('bairro').value=(js.bairro);
@@ -52,7 +53,7 @@
 					//document.getElementById('ibge').value=(js.ibge);
 				}
 			}
-			xhr.setRequestHeader("Content-Type", "text/json");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send();	
 		}
 		
